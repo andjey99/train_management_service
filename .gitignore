@@ -1,0 +1,19 @@
+# Build artifacts
+out/
+target/
+*.class
+*.jar
+!lib/*.jar
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
