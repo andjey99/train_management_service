@@ -1,58 +1,79 @@
 package com.example.train.model;
 
 import java.util.Objects;
+import java.io.Serializable; 
 
-public class Booking {
-    private final String id;
-    private final String trainId;
-    private final String passengerId;
-    private final int seatNumber;
 
-    public Booking(String bookingId, String trainId, String passengerId, int seatNumber) {
-        this.id = bookingId;
-        this.trainId = trainId;
-        this.passengerId = passengerId;
-        this.seatNumber = seatNumber;
+public class Booking implements Serializable 
+{
+
+    private static final long serialVersionUID = 1L;
+
+    
+    private final String buchungsKennung; // id
+    private final String zugKennung;      // trainId
+    private final String reisenderKennung; // passengerId
+    private final int sitzNummer;
+
+    public Booking (String bookingId, String trainRef, String passengerTag, int seatPos) 
+    {
+        this.buchungsKennung = bookingId;
+        this.zugKennung = trainRef;
+        this.reisenderKennung = passengerTag;
+        this.sitzNummer = seatPos;
     }
 
-    public String getId() {
-        return id;
+    public String getId() 
+    {
+        return this.buchungsKennung;
     }
 
-    public String getTrainId() {
-        return trainId;
+    public String getTrainId() 
+    {
+        return zugKennung;
     }
 
-    public String getPassengerId() {
-        return passengerId;
+    public String getPassengerId() 
+    {
+        return reisenderKennung;
     }
 
-    public int getSeatNumber() {
-        return seatNumber;
+    public int getSeatNumber() 
+    {
+        return sitzNummer;
     }
+
+    
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) {
+    public boolean equals(Object obj) 
+    {
+        if (this == obj) 
+        {
             return true;
         }
-        if (object == null) {
+        if (obj == null || getClass() != obj.getClass()) 
+        {
             return false;
         }
-        if (getClass() != object.getClass()) {
-            return false;
-        }
-        Booking otherBooking = (Booking) object;
-        return Objects.equals(id, otherBooking.id);
+        
+        Booking that = (Booking) obj;
+
+        return Objects.equals(buchungsKennung, that.buchungsKennung);
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public int hashCode() 
+    {
+        return Objects.hash(buchungsKennung);
     }
 
     @Override
-    public String toString() {
-        return "Booking{" + id + ", train=" + trainId + ", passenger=" + passengerId + ", seat=" + seatNumber + '}';
+    public String toString() 
+    {
+        return "Booking-Eintrag [ID: " + buchungsKennung
+                + ", Zug: " + zugKennung
+                + ", Passagier: " + reisenderKennung
+                + ", Platz: " + sitzNummer + "]";
     }
 }

@@ -171,7 +171,7 @@ public class TrainPanel extends JPanel
             // Parse capacity
             int capacity = Integer.parseInt(capacityStr);
 
-            // Parse time - this will throw DateTimeParseException if invalid
+            // Parse time 
             LocalTime time = LocalTime.parse(timeStr);
 
             String id = UUID.randomUUID().toString();

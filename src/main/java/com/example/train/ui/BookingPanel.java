@@ -52,7 +52,7 @@ public class BookingPanel extends JPanel
         JPanel panel = new JPanel();
         panel.setLayout (new GridBagLayout());
         panel.setBorder (BorderFactory.createTitledBorder("New Booking"));
-        // panel.setPreferredSize(new Dimension(300, 400)); // Removed to allow dynamic
+        
         // sizing
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -77,7 +77,7 @@ public class BookingPanel extends JPanel
         gbc.gridy = 1;
         panel.add(seatLabel, gbc);
 
-        // Use a spinner for seat selection, limited to 200 seats per train for now
+        //spinner for seat selection
         seatSpinner = new JSpinner (new SpinnerNumberModel(1, 1, 200, 1));
         seatSpinner.setPreferredSize (new Dimension(150, 25)); // Make sure it's wide enough
         gbc.gridx = 1;
@@ -148,10 +148,7 @@ public class BookingPanel extends JPanel
         return panel;
     }
 
-    /**
-     * Updates the displayed price based on the selected train.
-     * Currently uses a simple hash-based logic to simulate dynamic pricing.
-     */
+   
     private void updatePrice() {
         Train selectedTrain = (Train) trainCombo.getSelectedItem();
         if (selectedTrain != null) {
@@ -165,8 +162,10 @@ public class BookingPanel extends JPanel
         }
     }
 
-    private void createBooking() {
-        try {
+    private void createBooking() 
+    {
+        try 
+        {
             Train selectedTrain = (Train) trainCombo.getSelectedItem();
             Passenger selectedPassenger = (Passenger) passengerCombo.getSelectedItem();
             int seatNumber = (int) seatSpinner.getValue();
@@ -209,7 +208,7 @@ public class BookingPanel extends JPanel
         bookingTable.setModel(new javax.swing.table.DefaultTableModel(data,new String[] 
             { "Booking ID", "Train", "Passenger", "Seat", "Status" }));
 
-        // Also refresh combos in case new trains/passengers were added
+        //refresh combos new trains/passengers were added
         if (trainCombo != null && passengerCombo != null) 
             {
             Object selectedTrain = trainCombo.getSelectedItem();

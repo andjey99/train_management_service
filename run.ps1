@@ -1,75 +1,26 @@
-<#
-.SYNOPSIS
-    Compiles and runs the Train Management System.
+# Quick run
+cd $PSScriptRoot
 
-.DESCRIPTION
-    This script cleans the output directory, compiles all Java source files,
-    and launches the main application. It automatically includes the MySQL
-    connector from the 'lib' directory.
-
-.EXAMPLE
-    ./run.ps1
-#>
-
-$ErrorActionPreference = "Stop"
-
-# Ensure we are in the script's directory
-Set-Location $PSScriptRoot
-
-Write-Host "Starting Train Management System Build..." -ForegroundColor Cyan
-
-# Check for library
-if (-not (Test-Path "lib")) 
-{
-    Write-Error "Library directory isnt working! Please ensure 'mysql-connector-j.jar' is in a 'lib' folder."
-    exit 1
-}
-
-# Clean and recreate output directory
-Write-Host "Cleaning the output directory..." -ForegroundColor Yellow
-if (Test-Path "out") 
-{
-    Remove-Item -Path "out" -Recurse -Force
-}
-New-Item -ItemType Directory -Path "out" | Out-Null
-
-# Find all Java files
-$javaFiles = Get-ChildItem -Path "src\main\java" -Recurse -Filter *.java
-if ($javaFiles.Count -eq 0)
- {
-    Write-Error "No Java files found in src\main\java"
-    exit 1
-}
+# Clean
+if (Test-Path out) { rm out -Recurse -Force }
+mkdir out | Out-Null
 
 # Compile
-Write-Host "Compiling the source files..." -ForegroundColor Yellow
+Write-Host "Compiling..." -f Gray
+$files = (dir src\main\java -Recurse *.java).FullName
+javac -cp "lib/*" -d out -encoding UTF-8 $files
 
-# Use relative paths and forward slashes for classpath
-$classpath = "lib/*"
-$javacArgs = @("-cp", $classpath, "-d", "out", "-encoding", "UTF-8") + $javaFiles.FullName
-
-try 
-{
-    & javac $javacArgs
-    Write-Host "Compilation successful!" -ForegroundColor Green
-}
-catch 
-{
-    Write-Error "Compilation failed!"
-    exit 1
-}
-
-# Run
-Write-Host "Running the application..." -ForegroundColor Cyan
-
-$runClasspath = "out;lib/*"
-
-try 
-{
-    & java -cp $runClasspath com.example.train.Main
-}
-catch 
-{
-    Write-Error "Application crashed or failed to start. Sorry"
-    exit 1
+# Run if compile ok
+if ($LASTEXITCODE -eq 0) {
+    $msg = "LAUNCHING"
+    $colors = @("Red", "Yellow", "Green", "Cyan", "Blue", "Magenta")
+    $i = 0
+    foreach ($char in $msg.ToCharArray()) {
+        Write-Host "$char" -NoNewline -f $colors[$i % $colors.Count]
+        $i++
+        Start-Sleep -Milliseconds 100
+    }
+    Write-Host ""
+    
+    java -cp "out;lib/*" com.example.train.Main
 }

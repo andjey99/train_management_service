@@ -1,3 +1,4 @@
+
 package com.example.train.ui;
 
 import javax.swing.*;
@@ -5,7 +6,8 @@ import com.example.train.service.*;
 import com.example.train.model.Staff;
 import java.awt.*;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame 
+{
     private final Staff currentStaff;
     private final TrainService trainService;
     private final PassengerService passengerService;
@@ -31,8 +33,9 @@ public class MainFrame extends JFrame {
     // Timer for real-time updates
     private Timer updateTimer;
 
-    public MainFrame(Staff staff, TrainService trainService, PassengerService passengerService,
-            BookingService bookingService, StaffService staffService) {
+    public MainFrame (Staff staff, TrainService trainService, PassengerService passengerService,
+            BookingService bookingService, StaffService staffService) 
+    {
         this.currentStaff = staff;
         this.trainService = trainService;
         this.passengerService = passengerService;
@@ -42,11 +45,19 @@ public class MainFrame extends JFrame {
         startRealTimeUpdates();
     }
 
-    private void initComponents() {
+    private void initComponents() 
+    {
         setTitle("Train Management System - " + currentStaff.getName());
         setExtendedState(JFrame.MAXIMIZED_BOTH); // Start in full screen
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+
+        // Set Icon
+        java.net.URL iconURL = getClass().getResource("/icon.png");
+        if (iconURL != null) 
+        {
+            setIconImage(new ImageIcon(iconURL).getImage());
+        }
 
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setBackground(new Color(70, 130, 180));
@@ -85,7 +96,8 @@ public class MainFrame extends JFrame {
         add(contentPanel, BorderLayout.CENTER);
     }
 
-    private void startRealTimeUpdates() {
+    private void startRealTimeUpdates()
+    {
         // Poll every 2 seconds
         updateTimer = new Timer(2000, e -> {
             trainService.updateTrainStatuses(); // Check for completed trains
@@ -95,11 +107,14 @@ public class MainFrame extends JFrame {
         updateTimer.start();
     }
 
-    private void updateDashboardStats() {
-        if (trainCountLabel != null) {
+    private void updateDashboardStats() 
+    {
+        if (trainCountLabel != null) 
+        {
             trainCountLabel.setText(String.valueOf(trainService.listTrains().size()));
         }
-        if (bookingCountLabel != null) {
+        if (bookingCountLabel != null) 
+        {
             bookingCountLabel.setText(String.valueOf(bookingService.listBookings().size()));
         }
         if (passengerCountLabel != null) {
@@ -110,23 +125,25 @@ public class MainFrame extends JFrame {
         }
     }
 
-    private void refreshCurrentPanel() {
-        // Determine which panel is visible and refresh it
-        // Note: CardLayout doesn't easily tell us the current card name,
-        // so we can track it or check visibility.
-
-        if (bookingPanel.isVisible()) {
+    private void refreshCurrentPanel() 
+    {
+        if (bookingPanel.isVisible()) 
+        {
             bookingPanel.refresh();
-        } else if (trainPanel.isVisible()) {
+        } else if (trainPanel.isVisible()) 
+        {
             trainPanel.refresh();
-        } else if (passengerPanel.isVisible()) {
+        } else if (passengerPanel.isVisible()) 
+        {
             passengerPanel.refresh();
-        } else if (staffPanel.isVisible()) {
+        } else if (staffPanel.isVisible()) 
+        {
             staffPanel.refresh();
         }
     }
 
-    private JPanel createNavigationPanel() {
+    private JPanel createNavigationPanel() 
+    {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setPreferredSize(new Dimension(150, 700));
@@ -170,7 +187,8 @@ public class MainFrame extends JFrame {
         return panel;
     }
 
-    private JButton createNavButton(String text) {
+    private JButton createNavButton(String text)
+    {
         JButton btn = new JButton(text);
         btn.setAlignmentX(Component.LEFT_ALIGNMENT);
         btn.setMaximumSize(new Dimension(140, 40));
@@ -178,7 +196,8 @@ public class MainFrame extends JFrame {
         return btn;
     }
 
-    private JPanel createDashboardPanel() {
+    private JPanel createDashboardPanel() 
+    {
         JPanel panel = new JPanel(new BorderLayout());
         JLabel title = new JLabel("Dashboard");
         title.setFont(new Font("Arial", Font.BOLD, 14));
@@ -216,7 +235,8 @@ public class MainFrame extends JFrame {
         return panel;
     }
 
-    private JPanel createStatCard(String title, JLabel valueLabel) {
+    private JPanel createStatCard(String title, JLabel valueLabel) 
+    {
         JPanel card = new JPanel(new BorderLayout());
         card.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         card.setBackground(Color.WHITE);
@@ -229,12 +249,15 @@ public class MainFrame extends JFrame {
         return card;
     }
 
-    private void showPanel(String panelName) {
+    private void showPanel(String panelName) 
+    {
         cardLayout.show(contentPanel, panelName);
     }
 
-    private void logout() {
-        if (updateTimer != null) {
+    private void logout() 
+    {
+        if (updateTimer != null) 
+        {
             updateTimer.stop();
         }
         dispose();

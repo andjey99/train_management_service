@@ -5,17 +5,20 @@ import com.example.train.service.StaffService;
 import com.example.train.model.Staff;
 import java.awt.*;
 
-public class StaffPanel extends JPanel {
+public class StaffPanel extends JPanel
+ {
     private final StaffService staffService;
     private JTable staffTable;
 
-    public StaffPanel(StaffService staffService) {
+    public StaffPanel(StaffService staffService) 
+    {
         this.staffService = staffService;
         initComponents();
         refresh();
     }
 
-    private void initComponents() {
+    private void initComponents() 
+    {
         setLayout(new BorderLayout(10, 10));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -27,7 +30,8 @@ public class StaffPanel extends JPanel {
         add(tablePanel, BorderLayout.CENTER);
     }
 
-    private JPanel createTablePanel() {
+    private JPanel createTablePanel() 
+    {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createTitledBorder("Staff Members"));
 
@@ -42,11 +46,13 @@ public class StaffPanel extends JPanel {
         return panel;
     }
 
-    public void refresh() {
+    public void refresh() 
+    {
         java.util.List<Staff> staffList = staffService.listStaff();
         Object[][] data = new Object[staffList.size()][4];
 
-        for (int i = 0; i < staffList.size(); i++) {
+        for (int i = 0; i < staffList.size(); i++) 
+        {
             Staff staff = staffList.get(i);
             data[i][0] = staff.getId();
             data[i][1] = staff.getName();
@@ -54,7 +60,6 @@ public class StaffPanel extends JPanel {
             data[i][3] = staff.getEmail();
         }
 
-        staffTable.setModel(
-                new javax.swing.table.DefaultTableModel(data, new String[] { "ID", "Name", "Role", "Email" }));
+        staffTable.setModel(new javax.swing.table.DefaultTableModel(data, new String[] { "ID", "Name", "Role", "Email" }));
     }
 }

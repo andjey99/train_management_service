@@ -26,7 +26,7 @@ public class Booking_DB_Repository implements Booking_Repository
             Connection connection = db.getConnection ();
 
             // sql query
-            String query = "INSERT INTO bookings (id, train_id, passenger_id, seat_number) VALUES (?, ?, ?, ?)";
+            String query = "insert into bookings (id, train_id, passenger_id, seat_number) values (?, ?, ?, ?)";
 
             // prepare statement
             PreparedStatement prepstate = connection.prepareStatement (query);
@@ -107,10 +107,10 @@ public class Booking_DB_Repository implements Booking_Repository
             while (results.next () == true) 
             {
                 // get data
-                String bid = results.getString ("id");
-                String tid = results.getString ("train_id");
-                String pid = results.getString ("passenger_id");
-                int seat = results.getInt ("seat_number");
+                String bid = results.getString("id");
+                String tid = results.getString("train_id");
+                String pid = results.getString("passenger_id");
+                int seat = results.getInt("seat_number");
 
                 // make new booking
                 Booking b = new Booking(bid, tid, pid, seat);
@@ -159,7 +159,7 @@ public class Booking_DB_Repository implements Booking_Repository
             if (results.next () == true) 
             {
                 int count = results.getInt (1);
-                if (count >= 0) 
+                if (count > 0) 
                 {
                     taken = true;
                 }

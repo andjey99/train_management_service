@@ -3,33 +3,42 @@ package com.example.train.service;
 import com.example.train.model.Staff;
 import java.util.Optional;
 
-public class AuthService {
-    StaffService s; // service
+public class AuthService 
+{
+    StaffService service;
 
-    public AuthService(StaffService staffService) {
-        this.s = staffService;
+    public AuthService (StaffService staffService) 
+    {
+        this.service = staffService;
     }
 
-    public Optional<Staff> authenticate(String id, String pw) {
-        Optional<Staff> staff = s.getStaff(id);
+    public Optional <Staff> authenticate (String id,String pw) 
+    {
+        Optional<Staff> staff = service.getStaff (id);
 
-        if (staff.isPresent() == true) {
-            Optional<String> stored = s.getPassword(id);
+        if (staff.isPresent() == true) 
+        {
+            Optional <String> isPassword = service.getPassword (id);
 
-            if (stored.isPresent() == true && stored.get().equals(pw) == true) {
+            if (isPassword.isPresent() == true && isPassword.get().equals(pw) == true) 
+            {
                 return staff;
             }
         }
         return Optional.empty();
     }
 
-    public Staff getAuthenticatedStaff(String id, String pw) throws IllegalArgumentException {
-        Optional<Staff> s = authenticate(id, pw);
+    public Staff getAuthenticatedStaff (String id,String pw) 
+    {
+        Optional<Staff> workers = authenticate (id,pw);
 
-        if (s.isPresent() == true) {
-            return s.get();
-        } else {
-            throw new IllegalArgumentException("Invalid staff ID or password");
+        if (workers.isPresent() == true) 
+        {
+            return workers.get();
+        }   
+        else 
+        {
+        throw new IllegalArgumentException ("Fault staff ID or password, please try again");
         }
     }
 }

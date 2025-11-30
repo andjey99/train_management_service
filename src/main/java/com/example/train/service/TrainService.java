@@ -40,7 +40,7 @@ public class TrainService {
         return repo.findAll();
     }
 
-    public void removeTrain(String id)  {
+    public void removeTrain(String id)   {
         repo.delete(id);
     }
 }

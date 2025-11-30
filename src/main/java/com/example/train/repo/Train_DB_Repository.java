@@ -62,13 +62,13 @@ public class Train_DB_Repository implements Train_Repository
         }
     }
 
-    public Optional<Train> findById(String id) 
+    public Optional<Train> findById (String id) 
     {
         Train train = null;
         try 
         {
             Connection connection = db.getConnection();
-            String selectString = "SELECT * FROM trains WHERE id = ?";
+            String selectString = "select * from trains where id = ?";
             PreparedStatement statement = connection.prepareStatement(selectString);
             statement.setString(1, id);
 
@@ -89,7 +89,7 @@ public class Train_DB_Repository implements Train_Repository
                     statusString = "Scheduled";
                 }
 
-                train = new Train(tidString, nameString, capString, srcString, destString, timeString.toLocalTime(), statusString);
+                train = new Train(tidString,nameString,capString,srcString,destString,timeString.toLocalTime(),statusString);
             }
             connection.close();
         } 
@@ -115,7 +115,7 @@ public class Train_DB_Repository implements Train_Repository
         {
             Connection conn = db.getConnection ();
             Statement stat = conn.createStatement ();
-            String querie = "SELECT * FROM trains";
+            String querie = "select * from trains";
 
             ResultSet result = stat.executeQuery(querie);
 

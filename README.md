@@ -20,7 +20,10 @@ The project is clearly structured:
 1.  **Setup Database:**
     *   Ensure your MySQL server is running.
     *   Execute the `setup.sql` script in your MySQL client to create the `train_system` database and tables.
-    *   Check the credentials in `src/main/java/com/example/train/db/DatabaseConnection.java` (Default: user=`root`, password=`banmi`).
+    *   **IMPORTANT:** The application uses the following default credentials:
+        *   **User:** `root`
+        *   **Password:** `banmi`
+    *   If your local MySQL setup differs, please update `src/main/java/com/example/train/db/Database_Connection.java` and recompile.
 
 2.  **Start:**
     The project contains a PowerShell script for easy compiling and starting.

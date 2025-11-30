@@ -8,99 +8,119 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Passenger_DB_Repository implements Passenger_Repository {
+public class Passenger_DB_Repository implements Passenger_Repository 
+{
     Database_Connection db;
 
-    public Passenger_DB_Repository() {
+    public Passenger_DB_Repository() 
+    {
         this.db = new Database_Connection();
     }
 
     @Override
-    public void save(Passenger p) {
+    public void save (Passenger psng) 
+    {
         try {
             Connection conn = db.getConnection();
-            String q = "INSERT INTO passengers (id, name, email, phone) VALUES (?, ?, ?, ?)";
-            PreparedStatement pst = conn.prepareStatement(q);
+            String queryString = "INSERT INTO passengers (id, name, email, phone) VALUES (?, ?, ?, ?)";
+            PreparedStatement psst = conn.prepareStatement(queryString);
 
-            pst.setString(1, p.getId());
-            pst.setString(2, p.getName());
-            pst.setString(3, p.getEmail());
-            pst.setString(4, p.getPhone());
+            psst.setString (1, psng.getId());
+            psst.setString (2, psng.getName());
+            psst.setString (3, psng.getEmail());
+            psst.setString (4, psng.getPhone());
 
-            pst.executeUpdate();
+            psst.executeUpdate();
             conn.close();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) 
+        {
+            throw new RuntimeException (e);
         }
     }
 
     @Override
-    public Optional<Passenger> findById(String id) {
-        Passenger p = null;
+    public Optional<Passenger> findById (String id) 
+    {
+        Passenger psng = null;
         try {
             Connection conn = db.getConnection();
-            String q = "SELECT * FROM passengers WHERE id = ?";
-            PreparedStatement pst = conn.prepareStatement(q);
-            pst.setString(1, id);
+            String queryString = "SELECT * FROM passengers WHERE id = ?";
+            PreparedStatement psst = conn.prepareStatement(queryString);
+            psst.setString (1,id);
 
-            ResultSet rs = pst.executeQuery();
+            ResultSet results = psst.executeQuery();
 
-            if (rs.next() == true) {
-                String pid = rs.getString("id");
-                String name = rs.getString("name");
-                String email = rs.getString("email");
-                String phone = rs.getString("phone");
+            if (results.next() == true) 
+            {
+                String pid = results.getString ("id");
+                String name = results.getString ("name");
+                String email = results.getString ("email");
+                String phone = results.getString ("phone");
 
-                p = new Passenger(pid, name, email, phone);
+                psng = new Passenger(pid,name,email,phone);
             }
             conn.close();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } 
+        catch (Exception e) 
+        {
+            throw new RuntimeException (e);
         }
 
-        if (p != null) {
-            return Optional.of(p);
-        } else {
+        if (psng != null) 
+        {
+            return Optional.of(psng);
+        } 
+        else 
+        {
             return Optional.empty();
         }
     }
 
     @Override
-    public List<Passenger> findAll() {
-        List<Passenger> list = new ArrayList<>();
-        try {
-            Connection conn = db.getConnection();
-            Statement st = conn.createStatement();
-            String q = "SELECT * FROM passengers";
+    public List <Passenger> findAll () 
+    {
+        List <Passenger> list = new ArrayList<>();
+        try 
+        {
+            Connection conn = db.getConnection ();
+            Statement stmt = conn.createStatement ();
+            String queryString = "SELECT * FROM passengers";
 
-            ResultSet rs = st.executeQuery(q);
+            ResultSet results = stmt.executeQuery (queryString);
 
-            while (rs.next() == true) {
-                String pid = rs.getString("id");
-                String name = rs.getString("name");
-                String email = rs.getString("email");
-                String phone = rs.getString("phone");
+            while (results.next() == true) 
+            {
+                String pid = results.getString ("id");
+                String name = results.getString ("name");
+                String email = results.getString ("email");
+                String phone = results.getString ("phone");
 
-                Passenger p = new Passenger(pid, name, email, phone);
-                list.add(p);
+                Passenger psng = new Passenger(pid, name, email, phone);
+                list.add(psng);
             }
             conn.close();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } 
+        catch (Exception e) 
+        {
+            throw new RuntimeException (e);
         }
         return list;
     }
 
     @Override
-    public void delete(String id) {
-        try {
-            Connection conn = db.getConnection();
-            String q = "DELETE FROM passengers WHERE id = ?";
-            PreparedStatement pst = conn.prepareStatement(q);
-            pst.setString(1, id);
-            pst.executeUpdate();
+    public void delete(String id) 
+    {
+        try 
+        {
+            Connection conn = db.getConnection ();
+            String queryString ="delete from passengers where id = ?";
+            PreparedStatement psst = conn.prepareStatement(queryString);
+            psst.setString(1,id);
+            psst.executeUpdate();    
             conn.close();
-        } catch (Exception e) {
+        } 
+        catch (Exception e) 
+        {       
             throw new RuntimeException(e);
         }
     }

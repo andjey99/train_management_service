@@ -9,15 +9,16 @@ import java.awt.event.ActionListener;
 import java.util.UUID;
 
 // my passenger panel
-public class PassengerPanel extends JPanel {
-
+public class PassengerPanel extends JPanel
+ {
     PassengerService service; // no private final
     JTextField nameField;
     JTextField emailField;
     JTextField phoneField;
     JTable table;
-
-    public PassengerPanel(PassengerService s) {
+        
+    public PassengerPanel(PassengerService s) 
+    {
         this.service = s;
 
         // layout
@@ -72,22 +73,26 @@ public class PassengerPanel extends JPanel {
 
         // button
         JButton addButton = new JButton("Add Passenger");
-        addButton.addActionListener(new ActionListener() {
+        addButton.addActionListener(new ActionListener() 
+        {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) 
+            {
                 // get text
                 String name = nameField.getText();
                 String email = emailField.getText();
                 String phone = phoneField.getText();
 
                 // check empty
-                if (name.equals("") || email.equals("")) {
+                if (name.equals("") || email.equals("")) 
+                {
                     JOptionPane.showMessageDialog(null, "Name and Email are required.");
                     return;
                 }
 
                 // check email
-                if (email.indexOf("@") == -1) {
+                if (email.indexOf("@") == -1) 
+                {
                     JOptionPane.showMessageDialog(null, "Bad email.");
                     return;
                 }
@@ -106,7 +111,9 @@ public class PassengerPanel extends JPanel {
                 refresh();
                 JOptionPane.showMessageDialog(null, "Added!");
             }
-        });
+        }
+    )
+    ;
 
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -131,11 +138,13 @@ public class PassengerPanel extends JPanel {
         refresh();
     }
 
-    public void refresh() {
+    public void refresh() 
+    {
         java.util.List<Passenger> list = service.listPassengers();
         Object[][] d = new Object[list.size()][4];
 
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) 
+        {
             Passenger p = list.get(i);
             d[i][0] = p.getId();
             d[i][1] = p.getName();

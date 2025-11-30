@@ -54,14 +54,11 @@ public class Main
             trainService.addTrain(new Train("ICE-101", "ICE Berlin-Munich", 400, "Berlin", "Munich", LocalTime.of(8, 0)));
             trainService.addTrain(new Train("RE-5", "Regional Express", 150, "Cologne", "Dusseldorf", LocalTime.of(9, 30)));
             trainService.addTrain(new Train("IC-2020", "InterCity Hamburg", 250, "Frankfurt", "Hamburg", LocalTime.of(14, 15)));
+        }
 
-            // LIVE DEMO TRAIN: Departs in 1 minute
-            LocalTime demoTime = LocalTime.now().plusMinutes(1);
-            trainService.addTrain(new Train("DEMO-LIVE", "Live Presentation Train", 100, "Classroom", "Success", demoTime));
-        } 
-        else
+        // Ensure Demo Train always exists for the pitch, even if DB is not empty
+        if (trainService.getTrain("DEMO-LIVE").isEmpty())
         {
-            // Ensure Demo Train always exists for the pitch, even if DB is not empty
             LocalTime demoTime = LocalTime.now().plusMinutes(1);
             trainService.addTrain(new Train("DEMO-LIVE", "Live Presentation Train", 100, "Classroom", "Success", demoTime));
         }

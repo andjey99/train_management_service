@@ -6,7 +6,8 @@ import com.example.train.model.Staff;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class LoginDialog extends JDialog {
+public class LoginDialog extends JDialog 
+{
     private JTextField staffIdField;
     private JPasswordField passwordField;
     private JButton loginButton, exitButton;
@@ -14,24 +15,26 @@ public class LoginDialog extends JDialog {
     private Staff authenticatedStaff = null;
     private boolean success = false;
 
-    public LoginDialog(JFrame parent, AuthService authService) {
+    public LoginDialog (JFrame parent, AuthService authService) 
+    {
         super(parent, "Train Management System - Login", true);
         this.authService = authService;
         initComponents();
         setLocationRelativeTo(parent);
     }
 
-    private void initComponents() {
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        setSize(350, 200);
+    private void initComponents() 
+    {
+        setDefaultCloseOperation (JDialog.DISPOSE_ON_CLOSE);
+        setSize (350, 200);
         JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
+        panel.setLayout (new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.insets = new Insets (5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel titleLabel = new JLabel("Login");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        titleLabel.setFont (new Font ("Arial", Font.BOLD, 16));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
@@ -48,7 +51,7 @@ public class LoginDialog extends JDialog {
         gbc.gridy = 1;
         panel.add(staffIdField, gbc);
 
-        JLabel passwordLabel = new JLabel("Password:");
+        JLabel passwordLabel = new JLabel ("Password:");
         gbc.gridx = 0;
         gbc.gridy = 2;
         panel.add(passwordLabel, gbc);
@@ -77,7 +80,8 @@ public class LoginDialog extends JDialog {
         getRootPane().setDefaultButton(loginButton);
     }
 
-    private void handleLogin(ActionEvent e) {
+    private void handleLogin (ActionEvent e) 
+    {
         String staffId = staffIdField.getText().trim();
         String password = new String(passwordField.getPassword());
 
@@ -92,11 +96,13 @@ public class LoginDialog extends JDialog {
         }
     }
 
-    public boolean isLoginSuccessful() {
+    public boolean isLoginSuccessful()   
+    {
         return success;
     }
 
-    public Staff getAuthenticatedStaff() {
+    public Staff getAuthenticatedStaff() 
+    {
         return authenticatedStaff;
     }
 }
